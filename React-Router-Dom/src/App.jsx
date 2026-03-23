@@ -1,11 +1,12 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useRoutes, NavLink } from "react-router-dom";
 import Home from './pages/Home';
 import BookList from './pages/BookList';
 import Book from "./pages/Book";
 import NewBook from "./pages/NewBook";
 import BookLayout from "./pages/BookLayout";
 import NotFound from "./pages/NotFound";
-import BookRoutes from "./pages/BookRoutes";
+import BookRoutes from "./BookRoutes";
+import About from "./pages/About";
 
 /*
 ! * Routes -> 
@@ -30,6 +31,30 @@ import BookRoutes from "./pages/BookRoutes";
 */
 
 function App() {
+
+  /*
+  ! * useRoutes Hook ->
+  * This is a hook for declaring your routes as JavaScript objects instead of JSX <Route>
+  * components. It’s especially useful for nested routes and dynamic route configurations.
+   
+  ? useRoutes takes an array of route objects.
+  ?  Each object can have:
+    1. path → the URL path.
+    2. element → the React component to render.
+    3. children → nested routes.
+  ?  The useRoutes hook returns React elements, which you render directly. 
+  */
+  let element = useRoutes([
+    {
+      path: '/',
+      element: <Home />,
+    },
+    {
+      path: '*',
+      element: <NotFound />,
+    }
+  ])
+
   return (
     <>
       {/* 
@@ -42,11 +67,41 @@ function App() {
 
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
+          {/* 
+            Replace is used replace the previous link, instead of going back to the 
+            previous page it will go back 2 pages, because the page will not be in the history. 
+          */}
+          {/* 
+            reloadDocument will reload the entire page, instead of changing the content
+            inside the route.
+          */}
+          <li><Link to="/" replace>Home</Link></li>
+          <li>
+
+            {/*  
+              In react-router-dom, a  NavLink is a special type of navigation component used to
+              create links between different routes in a React application—but with extra awareness of the current route.
+
+              Core Idea
+
+              A NavLink works like a regular link (similar to <a> or Link), but it can detect whether
+              it matches the current URL. When it does, it automatically applies specific styling or classes.
+              
+            */}
+
+            <NavLink style={({ isActive }) => {
+              return isActive ? { color : "red" } : {}
+            }}
+              to="/"
+            >
+              Home
+            </NavLink>
+          </li>
           <li><Link to="/books">Books</Link></li>
         </ul>
       </nav>
 
+      { element } 
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -59,8 +114,11 @@ function App() {
           ->  Used to render the parent route component inside a nested routes.
           */}
 
-          <Route path="/books" element={<BookRoutes />} />
-          <Route path="*" element={<NotFound />} />
+          {/* 
+          * ! for nesting different routes together we use the url with /* 
+          * ! so that it matches any routes that come afterward
+          */}
+          <Route path="/books/*" element={<BookRoutes />} />
 
           {/* <Route index element={<BookList />} />
           <Route path=":id" element={<Book />} />
@@ -75,7 +133,7 @@ function App() {
         */}
 
         {/* 404 Route */}
-        {/* <Route path="*" element={<NotFound />}/> */}
+        <Route path="*" element={<NotFound />}/>
 
       </Routes>
     </>
