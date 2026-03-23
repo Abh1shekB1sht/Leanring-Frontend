@@ -31,12 +31,22 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <>
+      {/* 
+      Location is used to hard code the a location (url),
+      now it doesn't matter which url i go to it will show everywhere.
+      */}
+      <Routes location="/books">
+        <Route path="/books" element={<h1>Extra Content</h1>}/>
+      </Routes>
+
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/books">Books</Link></li>
         </ul>
       </nav>
+
+
       <Routes>
         <Route path="/" element={<Home />} />
 

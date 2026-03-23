@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet} from 'react-router-dom'
 
 function BookLayout() {
   return (
@@ -9,15 +9,16 @@ function BookLayout() {
         <br />
         <Link to="/books/2">Book 2</Link>
         <br />
-        <Link to="books/new">New Book</Link>
-        <Outlet />
+        <Link to="/books/new">New Book</Link>
+        <Outlet context={{ hello: "world" }}/>
     </>
   )
 }
 
 /*
 ! * Outlet ->
-* <Outlet> is a placeholder for nested routes. It allows you to render child routes inside a parent route.
+* <Outlet> is a placeholder for nested routes. 
+* It allows you to render child routes inside a parent route.
 
 * Think of it like this:
 

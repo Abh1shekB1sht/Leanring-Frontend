@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useOutletContext } from 'react-router-dom'
 
 /*
 ! * useParams() ->
@@ -30,8 +30,9 @@ import { useParams } from 'react-router-dom'
 
 function Book() {
   const { id } = useParams()
+  const obj = useOutletContext()
   return (
-    <h1>Book { id } </h1>
+    <h1>Book { id } { obj.hello } </h1>
   )
 }
 
