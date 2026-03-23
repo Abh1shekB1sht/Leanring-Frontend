@@ -5,6 +5,7 @@ import Book from "./pages/Book";
 import NewBook from "./pages/NewBook";
 import BookLayout from "./pages/BookLayout";
 import NotFound from "./pages/NotFound";
+import BookRoutes from "./pages/BookRoutes";
 
 /*
 ! * Routes -> 
@@ -50,7 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route path="/books" element={<BookLayout />}>
+        {/* <Route path="/books" element={<BookLayout />}> */}
 
           {/* 
           ->  Index parameter is used to tell the route component that the route for the
@@ -58,10 +59,12 @@ function App() {
           ->  Used to render the parent route component inside a nested routes.
           */}
 
-          <Route index element={<BookList />} />
+          <Route path="/books" element={<BookRoutes />} />
+          <Route path="*" element={<NotFound />} />
+
+          {/* <Route index element={<BookList />} />
           <Route path=":id" element={<Book />} />
-          <Route path="new" element={<NewBook />} />
-        </Route>
+          <Route path="new" element={<NewBook />} /> */}
 
         {/* <Route path="/books" element={<BookList />} />
 
@@ -72,7 +75,7 @@ function App() {
         */}
 
         {/* 404 Route */}
-        <Route path="*" element={<NotFound />}/>
+        {/* <Route path="*" element={<NotFound />}/> */}
 
       </Routes>
     </>
